@@ -1,11 +1,9 @@
-// App.js
+
 import React, { useState } from 'react';
 import './App.css';
 
 const App = () => {
   const [taskDescription, setTaskDescription] = useState('');
-  const [generatedPrompts, setGeneratedPrompts] = useState([]);
-  const [generatedTestCases, setGeneratedTestCases] = useState([]);
 
   const handleGeneratePrompts = () => {
     // Your logic for prompt generation
@@ -13,8 +11,11 @@ const App = () => {
     const newPrompt = "Generate a creative response.";
     const newTestCase = "Evaluate if the response is creative.";
 
-    setGeneratedPrompts([...generatedPrompts, newPrompt]);
-    setGeneratedTestCases([...generatedTestCases, newTestCase]);
+    // Add your logic for handling generated prompts and test cases if needed
+
+    // For now, let's just log them to the console
+    console.log('Generated Prompt:', newPrompt);
+    console.log('Generated Test Case:', newTestCase);
   };
 
   return (
@@ -27,24 +28,6 @@ const App = () => {
           onChange={(e) => setTaskDescription(e.target.value)}
         />
         <button onClick={handleGeneratePrompts}>Generate Prompts</button>
-      </section>
-
-      <section className="generated-prompts">
-        <h2>Generated Prompts</h2>
-        <ul>
-          {generatedPrompts.map((prompt, index) => (
-            <li key={index}>{prompt}</li>
-          ))}
-        </ul>
-      </section>
-
-      <section className="test-case-generation">
-        <h2>Test Case Generation</h2>
-        <ul>
-          {generatedTestCases.map((testCase, index) => (
-            <li key={index}>{testCase}</li>
-          ))}
-        </ul>
       </section>
     </div>
   );

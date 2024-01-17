@@ -1,0 +1,10 @@
+[
+    {
+        "user": "What is the title of this week's challenge",
+        "assistant": "Precision RAG: Prompt Tuning For Building Enterprise Grade RAG Systems"
+    },
+    {
+        "user": "What is the business objective",
+        "assistant": ": Automatic Prompt Generation, Automatic Evaluation Data Generation, and Prompt Testing and Ranking."
+    }
+]

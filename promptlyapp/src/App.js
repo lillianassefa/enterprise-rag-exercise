@@ -1,37 +1,97 @@
-
 import React, { useState } from 'react';
 import './App.css';
 
 const App = () => {
-  const [taskDescription, setTaskDescription] = useState('');
+  const [userMessage, setUserMessage] = useState('');
+  const [generatedContent, setGeneratedContent] = useState('');
+  // const [selectedOption, setSelectedOption] = useState('Option 1');
+  const handleGeneratePrompts = async () => {
+    try {
+      const response = await fetch('http://127.0.0.1:8000/get_prompt_completion', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ user_message: userMessage }),
+      });
 
-  const handleGeneratePrompts = () => {
-    // Your logic for prompt generation
-    // For demonstration purposes, let's add a sample prompt and test case
-    const newPrompt = "Generate a creative response.";
-    const newTestCase = "Evaluate if the response is creative.";
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
 
-    // Add your logic for handling generated prompts and test cases if needed
-
-    // For now, let's just log them to the console
-    console.log('Generated Prompt:', newPrompt);
-    console.log('Generated Test Case:', newTestCase);
+      const result = await response.json();
+      setGeneratedContent(result.generated_content);
+    } catch (error) {
+      console.error('Error:', error.message);
+    }
   };
-
+  const handleFileUpload = (event) => {
+    // Handle file upload logic here
+    const file = event.target.files[0];
+    console.log('Uploaded file:', file);
+  };
+  // const handleDropdownChange = (event) => {
+  //   setSelectedOption(event.target.value);
+  // };
   return (
-    <div className="app">
-      <section className="user-input">
-        <h2>User Input</h2>
-        <textarea
-          placeholder="Enter your task description..."
-          value={taskDescription}
-          onChange={(e) => setTaskDescription(e.target.value)}
-        />
-        <button onClick={handleGeneratePrompts}>Generate Prompts</button>
-      </section>
+    <div className="container">
+      <header>
+        <h1>Promptly</h1>
+      </header>
+
+      <main className="main-container">
+        {/* Left side: Generate Prompts */}
+        <section className="left-section">
+          <h2>Generate Prompts</h2>
+          <textarea
+            placeholder="Enter your prompt..."
+            value={userMessage}
+            onChange={(e) => setUserMessage(e.target.value)}
+          />
+          <button onClick={handleGeneratePrompts}>Generate</button>
+          {generatedContent && (
+            <section className="generated-content">
+              <h3>Enhanced Prompt</h3>
+              <p>{generatedContent}</p>
+            </section>
+          )}
+        </section>
+
+        
+        <section className="right-section">
+          <h2>Enter Contexts or Upload Files</h2>
+          <textarea
+            placeholder="Enter your context..."
+            // value={userContext}
+            // onChange={(e) => setUserContext(e.target.value)}
+          />
+          <label htmlFor="file-upload" className="file-upload-label">
+            <span>Upload </span>
+            <input
+              type="file"
+              id="file-upload"
+              accept=".csv, .txt"
+              onChange={handleFileUpload}
+            />
+          </label>
+        </section>
+      </main>
     </div>
   );
 };
 
 export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
 

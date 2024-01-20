@@ -1,0 +1,6 @@
+fastapi==0.109.0
+llama==0.1.1
+openai==1.8.0
+pydantic==2.5.3
+uvicorn==0.26.0
+weaviate_client==3.26.1
